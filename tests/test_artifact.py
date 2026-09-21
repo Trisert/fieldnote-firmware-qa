@@ -43,12 +43,12 @@ class ArtifactTests(unittest.TestCase):
         self.assertIn("embedded-firmware-qa-starter-kit/README.md", names)
         self.assertIn("embedded-firmware-qa-starter-kit/templates/ci-stm32.yml", names)
 
-    def test_landing_local_links_exist(self):
-        page = (ROOT / "site" / "index.html").read_text()
-        for href in ["sample-checklist.md", "kit-preview.html"]:
-            with self.subTest(href=href):
-                self.assertIn(href, page)
-                self.assertTrue((ROOT / "site" / href).is_file())
+    def test_preview_pages_inline_styles_for_file_preview(self):
+        for relative in ["site/index.html", "site/kit-preview.html"]:
+            with self.subTest(relative=relative):
+                page = (ROOT / relative).read_text()
+                self.assertIn("<style>", page)
+                self.assertIn("--bg: #0b0e12", page)
 
 
 if __name__ == "__main__":
