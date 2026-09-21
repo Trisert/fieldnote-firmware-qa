@@ -3,186 +3,365 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A practical STM32 embedded firmware QA starter kit: tests, traceability, CI, and fault-handling templates.">
-  <meta name="theme-color" content="#0b0e12">
+  <meta name="description" content="A practical STM32 embedded firmware QA starter kit: traceability, tests, CI, and release evidence templates.">
+  <meta name="theme-color" content="#eef2f4">
   <title>STM32 Embedded Firmware QA Starter Kit</title>
   <style>
 :root {
-  --bg: #0b0e12;
-  --panel: #11161d;
-  --panel-2: #151c24;
-  --line: #2a3541;
-  --text: #edf2f7;
-  --muted: #99a8b7;
-  --faint: #5d6c79;
-  --orange: #ffb14a;
-  --blue: #86b9d8;
-  --green: #78d49b;
-  --max: 1120px;
+  --paper: oklch(96% 0.012 220);
+  --paper-deep: oklch(91% 0.022 220);
+  --white: oklch(99% 0.004 220);
+  --ink: oklch(24% 0.028 232);
+  --muted: oklch(49% 0.035 232);
+  --quiet: oklch(64% 0.028 232);
+  --line: oklch(79% 0.025 220);
+  --blue: oklch(54% 0.19 258);
+  --blue-deep: oklch(32% 0.12 258);
+  --blue-pale: oklch(88% 0.045 250);
+  --red: oklch(58% 0.18 28);
+  --green: oklch(48% 0.13 160);
+  --max: 1180px;
+  --display: Georgia, "Times New Roman", serif;
+  --text: Arial, Helvetica, sans-serif;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * { box-sizing: border-box; }
-html { background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-body { margin: 0; min-width: 320px; background: var(--bg); }
-a { color: inherit; }
-.shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
-.topbar { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; min-height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--muted); font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; }
-.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
-.brand-mark { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--orange); border-radius: 50%; color: var(--orange); font-size: 18px; line-height: 1; }
-.status { display: inline-flex; align-items: center; gap: 8px; }
-.status i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(120, 212, 155, .12); }
-.hero { padding: 116px 0 92px; max-width: 950px; }
-.eyebrow, .section-kicker, .card-index, .price-label { color: var(--orange); font: 700 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; }
-h1, h2, h3, p { margin-top: 0; }
-h1 { max-width: 850px; margin-bottom: 26px; font-size: clamp(3.4rem, 8vw, 7.4rem); line-height: .91; letter-spacing: -.07em; font-weight: 720; }
-h1 em { color: var(--orange); font-style: normal; }
-.lede { max-width: 650px; color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.5; }
-.hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 36px; }
-.button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 17px; border-radius: 4px; text-decoration: none; font-weight: 750; transition: transform 150ms ease, background-color 150ms ease, color 150ms ease; }
-.button:active { transform: scale(.96); }
-.button-primary { background: var(--orange); color: #16100a; }
-.button-primary:hover { background: #ffc36b; }
-.button-disabled { background: #2a333c; color: #8493a0; cursor: not-allowed; }
-.text-link { color: var(--blue); text-underline-offset: 4px; text-decoration-color: rgba(134, 185, 216, .4); }
-.text-link:hover { color: var(--text); }
-.microcopy { margin-top: 15px; color: var(--faint); font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.signal-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
-.signal-bar div { min-height: 105px; padding: 25px 22px; border-right: 1px solid var(--line); }
-.signal-bar div:last-child { border-right: 0; }
-.signal-bar strong { display: block; margin-bottom: 7px; color: var(--text); font: 700 30px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.signal-bar span { color: var(--muted); font-size: 13px; }
-.split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 90px; padding: 110px 0; }
-h2 { font-size: clamp(2rem, 4vw, 3.6rem); line-height: .98; letter-spacing: -.05em; font-weight: 680; }
-.prose { max-width: 500px; color: var(--muted); line-height: 1.7; font-size: 1.05rem; }
-.prose p + p { margin-top: 18px; }
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.card { min-height: 255px; padding: 28px; background: var(--panel); }
-.card h3 { margin: 46px 0 12px; font-size: 1.35rem; letter-spacing: -.03em; }
-.card p { color: var(--muted); line-height: 1.55; }
-.callout { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-top: 110px; padding: 34px; border: 1px solid var(--line); background: var(--panel); }
-.callout h2 { max-width: 680px; margin: 18px 0 0; font-size: clamp(1.8rem, 3vw, 2.65rem); }
-.callout-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; white-space: nowrap; }
-.pill { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--blue); font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.offer { display: grid; grid-template-columns: 1fr 360px; gap: 70px; padding: 110px 0 130px; }
-.offer-copy h2 { max-width: 620px; margin: 18px 0; }
-.offer-copy p { max-width: 550px; color: var(--muted); line-height: 1.65; }
-.ticks { display: grid; gap: 11px; padding: 0; margin: 28px 0 0; list-style: none; color: var(--muted); }
-.ticks li::before { content: "✓"; margin-right: 10px; color: var(--green); font-weight: 800; }
-.offer-panel { align-self: start; display: grid; gap: 16px; padding: 28px; border: 1px solid var(--line); background: var(--panel-2); }
-.price { display: block; margin-top: 8px; color: var(--text); font: 700 42px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.price-note { color: var(--muted); font-size: 13px; line-height: 1.45; }
-.offer-panel .text-link { margin-top: 2px; font-size: 14px; }
-.footer { display: flex; justify-content: space-between; gap: 20px; padding: 20px 0 30px; border-top: 1px solid var(--line); color: var(--faint); font: 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
-@media (max-width: 760px) {
-  .shell, .topbar { width: min(calc(100% - 28px), var(--max)); }
-  .hero { padding: 78px 0 70px; }
-  .status { display: none; }
-  .signal-bar { grid-template-columns: repeat(2, 1fr); }
-  .signal-bar div:nth-child(2) { border-right: 0; }
-  .signal-bar div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .split, .offer { grid-template-columns: 1fr; gap: 30px; padding: 78px 0; }
-  .cards { grid-template-columns: 1fr; }
-  .callout { align-items: flex-start; flex-direction: column; margin-top: 78px; }
-  .callout-meta { align-items: flex-start; }
-  .footer { flex-direction: column; }
+html { scroll-behavior: smooth; color-scheme: light; background: var(--paper); }
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+.shell { width: min(calc(100% - 48px), var(--max)); margin-inline: auto; }
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 82px;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-size: 13px; font-weight: 800; }
+.wordmark-mark { display: grid; place-items: center; width: 30px; height: 30px; color: var(--white); background: var(--blue); font-family: var(--display); font-size: 19px; line-height: 1; }
+.header-nav { display: flex; align-items: center; gap: 26px; font-size: 14px; }
+.header-nav a { text-decoration: none; color: var(--muted); }
+.header-nav a:hover { color: var(--blue); }
+.header-nav .nav-cta { padding: 9px 13px; color: var(--white); background: var(--ink); }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr); gap: clamp(42px, 7vw, 100px); align-items: center; padding: clamp(72px, 10vw, 138px) 0 110px; }
+.hero-copy { max-width: 650px; }
+.kicker { margin-bottom: 24px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2 { font-family: var(--display); font-weight: 400; letter-spacing: -.045em; text-wrap: balance; }
+h1 { max-width: 680px; margin-bottom: 30px; font-size: clamp(3.6rem, 8vw, 7.6rem); line-height: .91; }
+h1 em { color: var(--blue); font-style: normal; }
+.lede { max-width: 590px; margin-bottom: 32px; color: var(--muted); font-size: clamp(1.08rem, 1.8vw, 1.25rem); line-height: 1.55; text-wrap: pretty; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border: 1px solid transparent; text-decoration: none; font-size: 14px; font-weight: 800; transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
+.button:active { transform: scale(.97); }
+.button-primary { color: var(--white); background: var(--blue); }
+.button-primary:hover { background: var(--blue-deep); }
+.button-secondary { border-color: var(--ink); color: var(--ink); background: transparent; }
+.button-secondary:hover { color: var(--white); background: var(--ink); }
+.button-disabled { color: var(--quiet); border-color: var(--line); background: var(--paper-deep); cursor: not-allowed; }
+.hero-caption { margin: 20px 0 0; color: var(--quiet); font-size: 12px; }
+
+.evidence-card { position: relative; padding: 16px; background: var(--blue-deep); box-shadow: 14px 14px 0 var(--blue); transform: rotate(1.25deg); }
+.evidence-sheet { min-height: 450px; padding: clamp(24px, 4vw, 42px); background: var(--white); }
+.sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.sheet-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.sheet-id { color: var(--quiet); font-size: 12px; }
+.pass-stamp { display: inline-grid; place-items: center; width: 76px; height: 76px; border: 2px solid var(--green); border-radius: 50%; color: var(--green); font-size: 13px; font-weight: 900; letter-spacing: .08em; transform: rotate(-8deg); }
+.sheet-title { margin: 34px 0 24px; font-family: var(--display); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 400; letter-spacing: -.05em; line-height: .95; }
+.evidence-rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 22px 0 30px; }
+.rail-step { position: relative; min-height: 74px; padding: 12px 9px; border-top: 5px solid var(--blue); background: var(--blue-pale); }
+.rail-step::after { content: "→"; position: absolute; top: 20px; right: -15px; z-index: 1; color: var(--blue); font-size: 18px; font-weight: 700; }
+.rail-step:last-child::after { display: none; }
+.rail-step strong, .rail-step span { display: block; }
+.rail-step strong { margin-bottom: 6px; font-size: 12px; }
+.rail-step span { color: var(--muted); font-size: 11px; line-height: 1.2; }
+.sheet-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.sheet-table th, .sheet-table td { padding: 10px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.sheet-table th { color: var(--quiet); font-weight: 400; }
+.sheet-table td { font-weight: 700; }
+.sheet-table td:last-child { text-align: right; }
+.ok { color: var(--green); }
+
+.intro-band { border-block: 1px solid var(--line); background: var(--paper-deep); }
+.intro-band-inner { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; padding: 32px 0; }
+.intro-band p { margin: 0; font-family: var(--display); font-size: clamp(1.45rem, 3vw, 2.45rem); line-height: 1.05; letter-spacing: -.04em; }
+.intro-band aside { padding-left: 22px; border-left: 3px solid var(--red); color: var(--muted); font-size: 14px; }
+
+.section { padding: clamp(84px, 11vw, 150px) 0; }
+.section-heading { display: grid; grid-template-columns: .82fr 1.18fr; gap: 60px; align-items: end; margin-bottom: 68px; }
+.section-heading h2 { max-width: 720px; margin: 0; font-size: clamp(2.7rem, 6vw, 5.5rem); line-height: .92; }
+.section-heading p { max-width: 390px; margin: 0; color: var(--muted); }
+.trace-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(36px, 7vw, 100px); align-items: start; }
+.trace-table { border-top: 2px solid var(--ink); }
+.trace-row { display: grid; grid-template-columns: 1.2fr .8fr .9fr; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.trace-row.header { color: var(--quiet); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.trace-row code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; }
+.trace-row span:last-child { color: var(--green); font-weight: 800; text-align: right; }
+.margin-note { position: relative; padding: 32px; border: 1px solid var(--line); background: var(--white); }
+.margin-note::before { content: ""; position: absolute; top: -12px; left: 28px; width: 72px; height: 24px; background: var(--blue-pale); transform: rotate(-3deg); }
+.margin-note h3 { margin-bottom: 18px; font-family: var(--display); font-size: 2.35rem; font-weight: 400; line-height: .98; letter-spacing: -.04em; }
+.margin-note p { margin-bottom: 18px; color: var(--muted); }
+.margin-note p:last-child { margin-bottom: 0; }
+
+.blue-field { color: var(--white); background: var(--blue-deep); }
+.blue-field .section-heading p { color: oklch(88% .025 258); }
+.blue-field .section-heading h2 { color: var(--white); }
+.file-list { border-top: 1px solid oklch(65% .08 258); }
+.file-item { display: grid; grid-template-columns: 74px 1.2fr 1fr; gap: 24px; align-items: start; padding: 25px 0; border-bottom: 1px solid oklch(65% .08 258); }
+.file-number { color: oklch(80% .1 258); font-family: var(--display); font-size: 1.75rem; line-height: 1; }
+.file-name { font-size: 1rem; font-weight: 800; }
+.file-purpose { color: oklch(84% .03 258); font-size: 14px; }
+
+.fit-section { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; }
+.fit-section h2 { margin: 0; font-size: clamp(2.7rem, 6vw, 5rem); line-height: .92; }
+.fit-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 2px solid var(--ink); }
+.fit-column { padding: 25px 24px 12px 0; }
+.fit-column + .fit-column { padding-left: 24px; border-left: 1px solid var(--line); }
+.fit-column h3 { margin-bottom: 20px; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+.fit-column:first-child h3 { color: var(--green); }
+.fit-column:last-child h3 { color: var(--red); }
+.fit-column ul { display: grid; gap: 13px; padding: 0; margin: 0; list-style: none; color: var(--muted); font-size: 14px; }
+.fit-column li::before { display: inline-block; width: 21px; font-weight: 900; }
+.fit-column:first-child li::before { content: "+"; color: var(--green); }
+.fit-column:last-child li::before { content: "−"; color: var(--red); }
+
+.offer-section { display: grid; grid-template-columns: 1.2fr .8fr; gap: 80px; align-items: end; padding-bottom: 110px; }
+.offer-section h2 { max-width: 700px; margin-bottom: 22px; font-size: clamp(2.8rem, 6vw, 5.8rem); line-height: .9; }
+.offer-section p { max-width: 570px; margin-bottom: 25px; color: var(--muted); }
+.offer-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 30px; max-width: 570px; padding: 0; margin: 0 0 30px; list-style: none; color: var(--muted); font-size: 14px; }
+.offer-list li::before { content: "✓"; margin-right: 8px; color: var(--green); font-weight: 800; }
+.price-sheet { padding: 28px; border: 2px solid var(--ink); background: var(--white); }
+.price-label { margin: 0 0 8px; color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.price { display: block; margin-bottom: 15px; font-family: var(--display); font-size: clamp(3.3rem, 6vw, 5rem); font-weight: 400; line-height: .9; letter-spacing: -.06em; }
+.price-note { margin-bottom: 22px; color: var(--muted); font-size: 13px; }
+.price-sheet .button { width: 100%; }
+.price-sheet .button + a { display: block; margin-top: 15px; color: var(--blue); font-size: 13px; text-align: center; }
+
+.site-footer { display: flex; justify-content: space-between; gap: 24px; padding: 24px 0 38px; border-top: 1px solid var(--line); color: var(--quiet); font-size: 12px; }
+.site-footer nav { display: flex; gap: 20px; }
+.site-footer a:hover { color: var(--blue); }
+
+.preview-hero { padding: 90px 0 62px; }
+.preview-hero h1 { max-width: 850px; margin-bottom: 24px; font-size: clamp(3.2rem, 7vw, 7rem); }
+.preview-hero .lede { max-width: 640px; }
+.manifest-wrap { display: grid; grid-template-columns: .72fr 1.28fr; gap: 80px; align-items: start; padding: 30px 0 120px; }
+.manifest-intro { position: sticky; top: 24px; }
+.manifest-intro h2 { margin-bottom: 18px; font-size: clamp(2.2rem, 4vw, 3.8rem); line-height: .94; }
+.manifest-intro p { color: var(--muted); }
+.manifest-index { display: grid; gap: 7px; margin-top: 28px; color: var(--quiet); font-size: 12px; }
+.manifest-index span { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.manifest-list { border-top: 2px solid var(--ink); }
+.manifest-row { display: grid; grid-template-columns: minmax(180px, .8fr) 1.2fr; gap: 30px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+.manifest-row code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; overflow-wrap: anywhere; }
+.manifest-row span { color: var(--muted); font-size: 14px; }
+.boundary { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 34px; border: 1px solid var(--line); background: var(--paper-deep); }
+.boundary h2 { margin: 0; font-size: 2.25rem; line-height: .95; }
+.boundary p { margin: 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 850px) {
+  .hero, .trace-layout, .offer-section, .manifest-wrap, .fit-section { grid-template-columns: 1fr; }
+  .hero { padding-top: 75px; }
+  .evidence-card { max-width: 650px; margin: 0 auto; }
+  .intro-band-inner, .section-heading { grid-template-columns: 1fr; gap: 22px; }
+  .section-heading { margin-bottom: 45px; }
+  .manifest-intro { position: static; }
+  .offer-section { gap: 42px; }
+}
+@media (max-width: 620px) {
+  .shell { width: min(calc(100% - 30px), var(--max)); }
+  .site-header { min-height: 70px; }
+  .header-nav a:not(.nav-cta) { display: none; }
+  h1 { font-size: clamp(3.2rem, 16vw, 5.2rem); }
+  .evidence-card { padding: 9px; box-shadow: 8px 8px 0 var(--blue); transform: none; }
+  .evidence-sheet { min-height: 0; padding: 23px 18px; }
+  .pass-stamp { width: 62px; height: 62px; font-size: 11px; }
+  .sheet-title { font-size: 2.15rem; }
+  .evidence-rail { gap: 3px; }
+  .rail-step { min-height: 64px; padding: 8px 5px; }
+  .rail-step::after { right: -11px; font-size: 13px; }
+  .rail-step strong { font-size: 10px; }
+  .rail-step span { font-size: 9px; }
+  .trace-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .trace-row span:last-child { text-align: left; }
+  .trace-row.header span:last-child { display: none; }
+  .file-item { grid-template-columns: 45px 1fr; gap: 12px; }
+  .file-purpose { grid-column: 2; }
+  .fit-columns, .offer-list, .boundary { grid-template-columns: 1fr; }
+  .fit-column + .fit-column { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+  .manifest-row { grid-template-columns: 1fr; gap: 9px; }
+  .boundary { gap: 24px; }
+  .site-footer { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
 
 </style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="./" aria-label="Embedded Firmware QA home">
-      <span class="brand-mark" aria-hidden="true">◎</span>
-      <span>EFQ / 01</span>
+  <header class="site-header shell">
+    <a class="wordmark" href="./" aria-label="Embedded Firmware QA home">
+      <span class="wordmark-mark" aria-hidden="true">↗</span>
+      <span>Fieldnote / firmware QA</span>
     </a>
-    <span class="status"><i></i> validation build · v0.1.0</span>
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a href="#kit">The kit</a>
+      <a href="#fit">Who it is for</a>
+      <a class="nav-cta" href="sample-checklist.md">Open sample</a>
+    </nav>
   </header>
 
   <main>
     <section class="hero shell">
-      <div class="eyebrow">STM32 · C · FREERTOS · CI</div>
-      <h1>Ship firmware with <em>evidence</em>, not hope.</h1>
-      <p class="lede">A focused starter kit for embedded teams who need a repeatable path from requirement to test result — without buying a heavyweight process first.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="sample-checklist.md">Download the free sample <span>↗</span></a>
-        <a class="text-link" href="kit-preview.html">Inspect the full kit <span>→</span></a>
+      <div class="hero-copy">
+        <p class="kicker">STM32 · C · FREERTOS · RELEASE EVIDENCE</p>
+        <h1>QA that leaves a <em>paper trail.</em></h1>
+        <p class="lede">A compact starter kit for firmware teams that need to connect requirements, tests, CI results, and release evidence without importing a heavyweight process.</p>
+        <div class="actions">
+          <a class="button button-primary" href="sample-checklist.md">Read the free sample ↗</a>
+          <a class="button button-secondary" href="kit-preview.html">Open the kit manifest</a>
+        </div>
+        <p class="hero-caption">Plain Markdown, CSV, and YAML files. Inspect them before you decide.</p>
       </div>
-      <p class="microcopy">No account · no API key · free sample · English-first templates</p>
+
+      <div class="evidence-card" aria-label="Example release evidence sheet">
+        <div class="evidence-sheet">
+          <div class="sheet-top">
+            <div>
+              <div class="sheet-label">Release evidence</div>
+              <div class="sheet-id">record R-014 / motor controller</div>
+            </div>
+            <span class="pass-stamp">PASS</span>
+          </div>
+          <h2 class="sheet-title">The result is only useful when someone can follow it back.</h2>
+          <div class="evidence-rail" aria-label="Evidence path">
+            <div class="rail-step"><strong>REQ-014</strong><span>requirement</span></div>
+            <div class="rail-step"><strong>TEST-06</strong><span>host test</span></div>
+            <div class="rail-step"><strong>CI-118</strong><span>workflow</span></div>
+            <div class="rail-step"><strong>ART-22</strong><span>artifact</span></div>
+          </div>
+          <table class="sheet-table">
+            <tbody>
+              <tr><th scope="row">target</th><td>STM32G4</td></tr>
+              <tr><th scope="row">owner</th><td>firmware</td></tr>
+              <tr><th scope="row">tests</th><td class="ok">18 / 18 passed</td></tr>
+              <tr><th scope="row">static analysis</th><td class="ok">clean</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
-    <section class="signal-bar shell" aria-label="Kit summary">
-      <div><strong>12</strong><span>review surfaces</span></div>
-      <div><strong>6</strong><span>drop-in templates</span></div>
-      <div><strong>1</strong><span>repeatable CI path</span></div>
-      <div><strong>0</strong><span>certification claims</span></div>
+    <section class="intro-band">
+      <div class="intro-band-inner shell">
+        <p>“Tested” is a statement. Evidence is a path another engineer can walk.</p>
+        <aside>If your release proof is spread across issue comments, terminal output, and memory, start with one traceable loop.</aside>
+      </div>
     </section>
 
-    <section class="split shell">
+    <section class="section shell" id="kit">
+      <div class="section-heading">
+        <h2>The gap is between “tested” and “shown.”</h2>
+        <p>The kit turns the unglamorous parts of embedded QA into files you can commit, review, adapt, and delete when they stop earning their keep.</p>
+      </div>
+      <div class="trace-layout">
+        <div class="trace-table" aria-label="Example requirements traceability table">
+          <div class="trace-row header"><span>requirement</span><span>verification</span><span>evidence</span></div>
+          <div class="trace-row"><code>REQ-014 / overcurrent</code><span>fault injection</span><span>linked</span></div>
+          <div class="trace-row"><code>REQ-021 / watchdog</code><span>hardware test</span><span>linked</span></div>
+          <div class="trace-row"><code>REQ-032 / boot path</code><span>host + target</span><span>linked</span></div>
+          <div class="trace-row"><code>REQ-041 / telemetry</code><span>integration</span><span>open</span></div>
+        </div>
+        <aside class="margin-note">
+          <h3>One open row is more honest than a green dashboard.</h3>
+          <p>Start with the uncomfortable part: make the missing proof visible, assign it, and keep the decision in the project history.</p>
+          <p>The starter kit is deliberately process-light. It gives a small team enough structure to stop losing context.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section blue-field" aria-labelledby="contents-title">
+      <div class="shell">
+        <div class="section-heading">
+          <h2 id="contents-title">Seven files. One repeatable loop.</h2>
+          <p>The bundle is not a course and it is not a certification package. It is a set of working surfaces for the next firmware project.</p>
+        </div>
+        <div class="file-list">
+          <div class="file-item"><span class="file-number">01</span><strong class="file-name">firmware-qa-checklist.md</strong><span class="file-purpose">A review surface from requirements through release evidence.</span></div>
+          <div class="file-item"><span class="file-number">02</span><strong class="file-name">requirements-traceability.csv</strong><span class="file-purpose">A spreadsheet-friendly map of requirement, method, evidence, owner, and status.</span></div>
+          <div class="file-item"><span class="file-number">03</span><strong class="file-name">test-plan.md</strong><span class="file-purpose">Host, hardware-in-loop, fault-injection, and release planning structure.</span></div>
+          <div class="file-item"><span class="file-number">04</span><strong class="file-name">bug-report.yml</strong><span class="file-purpose">A GitHub Issue Form for failures someone else can reproduce.</span></div>
+          <div class="file-item"><span class="file-number">05</span><strong class="file-name">ci-stm32.yml</strong><span class="file-purpose">Build, test, analysis, and artifact gates for pull requests.</span></div>
+          <div class="file-item"><span class="file-number">06</span><strong class="file-name">examples/README.md</strong><span class="file-purpose">Adapter notes for your MCU, build system, test runner, and board.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="fit">
+      <div class="fit-section">
+        <h2>Useful before it is impressive.</h2>
+        <div class="fit-columns">
+          <div class="fit-column">
+            <h3>Good fit</h3>
+            <ul>
+              <li>STM32 projects with a small engineering team</li>
+              <li>Firmware moving from prototype to repeatable builds</li>
+              <li>Teams that want evidence before a formal process</li>
+            </ul>
+          </div>
+          <div class="fit-column">
+            <h3>Not a promise</h3>
+            <ul>
+              <li>Not certification or a flight-readiness decision</li>
+              <li>Not a replacement for hardware-specific review</li>
+              <li>Not a guarantee that a design is safe</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="offer-section shell" id="offer">
       <div>
-        <div class="section-kicker">WHY THIS EXISTS</div>
-        <h2>Embedded QA becomes painful when every project reinvents the checklist.</h2>
-      </div>
-      <div class="prose">
-        <p>This pack turns the boring but important work into reusable project files: trace requirements, define verification, catch regressions on every pull request, and record release evidence.</p>
-        <p>It is intentionally small. You can adopt one template today and expand only when the project earns the extra process.</p>
-      </div>
-    </section>
-
-    <section class="cards shell" aria-label="What's inside">
-      <article class="card">
-        <span class="card-index">01 / TRACE</span>
-        <h3>Requirements → evidence</h3>
-        <p>A CSV traceability matrix and test-plan structure keep “done” tied to something observable.</p>
-      </article>
-      <article class="card">
-        <span class="card-index">02 / TEST</span>
-        <h3>Host tests first</h3>
-        <p>Separate fast native tests from target builds so feedback arrives before hardware is on the bench.</p>
-      </article>
-      <article class="card">
-        <span class="card-index">03 / GATE</span>
-        <h3>CI that can fail</h3>
-        <p>Use explicit build, test, coverage, and static-analysis gates instead of green-looking silence.</p>
-      </article>
-    </section>
-
-    <section class="callout shell">
-      <div>
-        <div class="section-kicker">PRODUCT HYPOTHESIS</div>
-        <h2>Start broad with STM32 firmware. Add small-satellite depth only when the audience asks for it.</h2>
-      </div>
-      <div class="callout-meta">
-        <span class="pill">STM32 / C / FreeRTOS</span>
-        <span class="pill">Small teams</span>
-        <span class="pill">PocketQube extension</span>
-      </div>
-    </section>
-
-    <section class="offer shell">
-      <div class="offer-copy">
-        <div class="section-kicker">EARLY ACCESS</div>
-        <h2>Validate the kit before paying for it.</h2>
+        <p class="kicker">VALIDATION BUILD / V0.1</p>
+        <h2>Try the small version before you buy the big one.</h2>
         <p>The free sample is intentionally useful. If it saves you time, the full bundle adds the remaining templates and a documented adoption path.</p>
-        <ul class="ticks">
-          <li>Single-project license</li>
-          <li>Markdown, CSV, YAML — easy to adapt</li>
-          <li>No certification claims</li>
+        <ul class="offer-list">
+          <li>single-project license</li>
+          <li>no account or API key</li>
+          <li>English-first templates</li>
+          <li>no certification claims</li>
         </ul>
+        <div class="actions"><a class="button button-primary" href="sample-checklist.md">Get the free sample ↗</a><a class="button button-secondary" href="kit-preview.html">Inspect every file</a></div>
       </div>
-      <div class="offer-panel" id="checkout">
-        <span class="price-label">TARGET PRICE</span>
+      <aside class="price-sheet" id="checkout">
+        <p class="price-label">Target price</p>
         <strong class="price">€9–19</strong>
-        <span class="price-note">checkout will be enabled after demand validation</span>
+        <p class="price-note">Checkout stays off until a real provider and a real product URL are chosen.</p>
         <a class="button button-disabled" data-checkout-url="" href="#checkout" aria-disabled="true">Checkout not configured</a>
-        <a class="text-link" href="kit-preview.html">See exactly what is included →</a>
-      </div>
+        <a href="kit-preview.html">See the exact manifest →</a>
+      </aside>
     </section>
   </main>
 
-  <footer class="footer shell">
-    <span>EFQ / 01 · validation build</span>
-    <span>Built as a zero-cost product experiment</span>
+  <footer class="site-footer shell">
+    <span>Fieldnote / firmware QA · validation build</span>
+    <nav aria-label="Footer navigation"><a href="sample-checklist.md">Sample</a><a href="kit-preview.html">Manifest</a><a href="#offer">Offer</a></nav>
   </footer>
   <script src="site.js" defer></script>
 </body>
