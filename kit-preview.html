@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Preview of the STM32 Embedded Firmware QA Starter Kit contents.">
+  <meta name="description" content="Preview of the Fieldnote Release QA Starter Kit contents.">
   <meta name="theme-color" content="#eef2f4">
-  <title>Kit manifest · Fieldnote / firmware QA</title>
+  <title>Kit manifest · Fieldnote / release QA</title>
   <style>
 :root {
   --paper: oklch(96% 0.012 220);
@@ -215,7 +215,7 @@ h1 em { color: var(--blue); font-style: normal; }
 </head>
 <body>
   <header class="site-header shell">
-    <a class="wordmark" href="./" aria-label="Back to Fieldnote home"><span class="wordmark-mark" aria-hidden="true">↗</span><span>Fieldnote / firmware QA</span></a>
+    <a class="wordmark" href="./" aria-label="Back to Fieldnote home"><span class="wordmark-mark" aria-hidden="true">↗</span><span>Fieldnote / release QA</span></a>
     <nav class="header-nav" aria-label="Primary navigation"><a href="./">Home</a><a class="nav-cta" href="sample-checklist.md">Open sample</a></nav>
   </header>
 
@@ -223,7 +223,7 @@ h1 em { color: var(--blue); font-style: normal; }
     <section class="preview-hero">
       <p class="kicker">FULL KIT / FILE MANIFEST</p>
       <h1>Open the kit like a report.</h1>
-      <p class="lede">The bundle is plain on purpose: inspect each file, adapt it to your build system, commit what helps, and leave the rest behind.</p>
+      <p class="lede">The bundle is plain on purpose: inspect each file, adapt it to your stack, commit what helps, and leave the rest behind.</p>
     </section>
 
     <section class="manifest-wrap" aria-labelledby="manifest-title">
@@ -232,7 +232,7 @@ h1 em { color: var(--blue); font-style: normal; }
         <p>Every file answers one practical question: what did we intend, how did we check it, and where is the evidence?</p>
         <div class="manifest-index" aria-label="Manifest summary">
           <span><strong>format</strong><span>Markdown / CSV / YAML</span></span>
-          <span><strong>scope</strong><span>single firmware project</span></span>
+          <span><strong>scope</strong><span>one technical release</span></span>
           <span><strong>license</strong><span>included</span></span>
         </div>
       </aside>
@@ -240,19 +240,19 @@ h1 em { color: var(--blue); font-style: normal; }
         <div class="manifest-row"><code>checklists/firmware-qa-checklist.md</code><span>Review surface from requirements to release evidence. Use it as the first shared page in a new project.</span></div>
         <div class="manifest-row"><code>templates/requirements-traceability.csv</code><span>Requirement, verification method, evidence, owner, and status in a spreadsheet-friendly format.</span></div>
         <div class="manifest-row"><code>templates/test-plan.md</code><span>Host, hardware-in-loop, fault-injection, and release test planning structure.</span></div>
-        <div class="manifest-row"><code>templates/bug-report.yml</code><span>GitHub Issue Form for embedded failures with enough context to reproduce them.</span></div>
+        <div class="manifest-row"><code>templates/bug-report.yml</code><span>GitHub Issue Form for failures with enough context for another person to reproduce them.</span></div>
         <div class="manifest-row"><code>templates/issue-template.md</code><span>Small requirement-linked engineering issue template for the work between tests.</span></div>
-        <div class="manifest-row"><code>templates/ci-stm32.yml</code><span>CI scaffold for host tests, static analysis, firmware build, and artifact upload.</span></div>
-        <div class="manifest-row"><code>examples/README.md</code><span>Adapter notes: what to replace for your MCU, build system, test runner, and board.</span></div>
+        <div class="manifest-row"><code>templates/ci-stm32.yml</code><span>CI scaffold for tests, static analysis, builds, and artifact upload. Adapt the commands for your stack.</span></div>
+        <div class="manifest-row"><code>examples/README.md</code><span>Adapter notes: what to replace for your build system, test runner, hardware boundary, or service.</span></div>
       </div>
     </section>
 
     <section class="boundary" aria-labelledby="boundary-title">
       <h2 id="boundary-title">A starter process is not a safety decision.</h2>
-      <p>This kit makes evidence easier to organise. It does not certify a product, decide flight readiness, or replace review against the actual hardware, interfaces, requirements, and applicable standards.</p>
+      <p>This kit makes evidence easier to organise. It does not certify a product, replace domain expertise, or make safety and compliance decisions for your team.</p>
     </section>
   </main>
 
-  <footer class="site-footer shell"><span>Fieldnote / firmware QA · validation build</span><nav aria-label="Footer navigation"><a href="./">Home</a><a href="sample-checklist.md">Free sample</a></nav></footer>
+  <footer class="site-footer shell"><span>Fieldnote / release QA · validation build</span><nav aria-label="Footer navigation"><a href="./">Home</a><a href="sample-checklist.md">Free sample</a></nav></footer>
 </body>
 </html>
