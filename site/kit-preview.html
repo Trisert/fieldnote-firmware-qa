@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Preview of the Embedded Firmware QA Starter Kit contents.">
+  <title>Kit Preview · EFQ / 01</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .preview { padding: 88px 0 120px; max-width: 820px; }
+    .back { display: inline-block; margin-bottom: 42px; color: var(--blue); }
+    .manifest { display: grid; gap: 1px; margin-top: 42px; border: 1px solid var(--line); background: var(--line); }
+    .manifest-row { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; padding: 20px; background: var(--panel); }
+    .manifest-row code { color: var(--orange); font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .manifest-row span { color: var(--muted); line-height: 1.55; }
+    .note { margin-top: 40px; padding: 22px; border-left: 3px solid var(--orange); background: var(--panel); color: var(--muted); line-height: 1.6; }
+    @media (max-width: 650px) { .manifest-row { grid-template-columns: 1fr; gap: 8px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./"><span class="brand-mark">◎</span><span>EFQ / 01</span></a><span class="status"><i></i> kit manifest</span></header>
+  <main class="preview shell">
+    <a class="back" href="./">← Back to the validation page</a>
+    <div class="eyebrow">FULL KIT / MANIFEST</div>
+    <h1>Everything needed to start a credible QA loop.</h1>
+    <p class="lede">The bundle is plain files on purpose: inspect them, adapt them, commit them to your project, and delete what you do not need.</p>
+    <div class="manifest">
+      <div class="manifest-row"><code>checklists/firmware-qa-checklist.md</code><span>Review surface map from requirements to release evidence.</span></div>
+      <div class="manifest-row"><code>templates/requirements-traceability.csv</code><span>Requirement, verification method, evidence, owner, and status in a spreadsheet-friendly format.</span></div>
+      <div class="manifest-row"><code>templates/test-plan.md</code><span>Host, hardware-in-loop, fault-injection, and release test planning structure.</span></div>
+      <div class="manifest-row"><code>templates/bug-report.yml</code><span>GitHub Issue Form for reproducible embedded failures.</span></div>
+      <div class="manifest-row"><code>templates/issue-template.md</code><span>Small issue template for a requirement-linked engineering task.</span></div>
+      <div class="manifest-row"><code>templates/ci-stm32.yml</code><span>CI scaffold for host tests, static analysis, firmware build, and artifact upload.</span></div>
+      <div class="manifest-row"><code>examples/README.md</code><span>Adapter notes: what to replace for your MCU, build system, test runner, and board.</span></div>
+    </div>
+    <div class="note"><strong>Boundary:</strong> this is a starter process, not a certification package, flight-readiness decision, or safety guarantee. It must be reviewed against the actual hardware, requirements, interfaces, and applicable standards.</div>
+  </main>
+  <footer class="footer shell"><span>EFQ / 01 · validation build</span><span><a href="sample-checklist.md">Free sample</a></span></footer>
+</body>
+</html>

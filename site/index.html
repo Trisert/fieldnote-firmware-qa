@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical STM32 embedded firmware QA starter kit: tests, traceability, CI, and fault-handling templates.">
+  <meta name="theme-color" content="#0b0e12">
+  <title>STM32 Embedded Firmware QA Starter Kit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Embedded Firmware QA home">
+      <span class="brand-mark" aria-hidden="true">◎</span>
+      <span>EFQ / 01</span>
+    </a>
+    <span class="status"><i></i> validation build · v0.1.0</span>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="eyebrow">STM32 · C · FREERTOS · CI</div>
+      <h1>Ship firmware with <em>evidence</em>, not hope.</h1>
+      <p class="lede">A focused starter kit for embedded teams who need a repeatable path from requirement to test result — without buying a heavyweight process first.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="sample-checklist.md">Download the free sample <span>↗</span></a>
+        <a class="text-link" href="kit-preview.html">Inspect the full kit <span>→</span></a>
+      </div>
+      <p class="microcopy">No account · no API key · free sample · English-first templates</p>
+    </section>
+
+    <section class="signal-bar shell" aria-label="Kit summary">
+      <div><strong>12</strong><span>review surfaces</span></div>
+      <div><strong>6</strong><span>drop-in templates</span></div>
+      <div><strong>1</strong><span>repeatable CI path</span></div>
+      <div><strong>0</strong><span>certification claims</span></div>
+    </section>
+
+    <section class="split shell">
+      <div>
+        <div class="section-kicker">WHY THIS EXISTS</div>
+        <h2>Embedded QA becomes painful when every project reinvents the checklist.</h2>
+      </div>
+      <div class="prose">
+        <p>This pack turns the boring but important work into reusable project files: trace requirements, define verification, catch regressions on every pull request, and record release evidence.</p>
+        <p>It is intentionally small. You can adopt one template today and expand only when the project earns the extra process.</p>
+      </div>
+    </section>
+
+    <section class="cards shell" aria-label="What's inside">
+      <article class="card">
+        <span class="card-index">01 / TRACE</span>
+        <h3>Requirements → evidence</h3>
+        <p>A CSV traceability matrix and test-plan structure keep “done” tied to something observable.</p>
+      </article>
+      <article class="card">
+        <span class="card-index">02 / TEST</span>
+        <h3>Host tests first</h3>
+        <p>Separate fast native tests from target builds so feedback arrives before hardware is on the bench.</p>
+      </article>
+      <article class="card">
+        <span class="card-index">03 / GATE</span>
+        <h3>CI that can fail</h3>
+        <p>Use explicit build, test, coverage, and static-analysis gates instead of green-looking silence.</p>
+      </article>
+    </section>
+
+    <section class="callout shell">
+      <div>
+        <div class="section-kicker">PRODUCT HYPOTHESIS</div>
+        <h2>Start broad with STM32 firmware. Add small-satellite depth only when the audience asks for it.</h2>
+      </div>
+      <div class="callout-meta">
+        <span class="pill">STM32 / C / FreeRTOS</span>
+        <span class="pill">Small teams</span>
+        <span class="pill">PocketQube extension</span>
+      </div>
+    </section>
+
+    <section class="offer shell">
+      <div class="offer-copy">
+        <div class="section-kicker">EARLY ACCESS</div>
+        <h2>Validate the kit before paying for it.</h2>
+        <p>The free sample is intentionally useful. If it saves you time, the full bundle adds the remaining templates and a documented adoption path.</p>
+        <ul class="ticks">
+          <li>Single-project license</li>
+          <li>Markdown, CSV, YAML — easy to adapt</li>
+          <li>No certification claims</li>
+        </ul>
+      </div>
+      <div class="offer-panel" id="checkout">
+        <span class="price-label">TARGET PRICE</span>
+        <strong class="price">€9–19</strong>
+        <span class="price-note">checkout will be enabled after demand validation</span>
+        <a class="button button-disabled" data-checkout-url="" href="#checkout" aria-disabled="true">Checkout not configured</a>
+        <a class="text-link" href="kit-preview.html">See exactly what is included →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <span>EFQ / 01 · validation build</span>
+    <span>Built as a zero-cost product experiment</span>
+  </footer>
+  <script src="site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+name: Embedded firmware defect
+description: Report a reproducible firmware, test, build, or hardware-in-loop failure.
+title: "[defect] "
+labels:
+  - defect
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One sentence describing the observed failure.
+      placeholder: Watchdog reset is not recorded after task starvation.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Firmware revision, board revision, MCU, toolchain, OS, and test level.
+      placeholder: |
+        Firmware: abc1234
+        Board: rev B
+        MCU: STM32____
+        Test level: host / target / HIL
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Minimal deterministic steps, inputs, and commands.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior and evidence
+      description: Include logs, traces, screenshots, captured frames, or artifact paths.
+    validations:
+      required: true
+  - type: input
+    id: requirement
+    attributes:
+      label: Requirement ID
+      placeholder: REQ-001
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Triage checks
+      options:
+        - label: I checked the failure against the current revision.
+          required: true
+        - label: I attached or linked the evidence needed to reproduce it.
+          required: true

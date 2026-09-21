@@ -1,0 +1,5 @@
+requirement_id,requirement,source,verification_method,evidence_path,owner,status,notes
+REQ-001,"Firmware starts only after integrity checks pass",customer-spec,host-test,,owner,todo,"Replace source and owner"
+REQ-002,"Invalid input frames are rejected without buffer access",interface-contract,host-test,artifacts/tests/frames.txt,owner,todo,"Add boundary vectors"
+REQ-003,"Watchdog recovery records a reset reason",system-requirement,hardware-test,,owner,blocked,"Needs target reset capture"
+REQ-004,"Release artifact is reproducible from a clean checkout",process,ci-build,artifacts/build/reproducibility.txt,owner,todo,"Pin toolchain"
