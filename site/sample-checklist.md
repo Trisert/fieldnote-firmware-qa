@@ -1,10 +1,10 @@
-# Free sample — Firmware QA checklist
+# Free sample — Release QA checklist
 
-Use this as a first-pass review for a small STM32/C/FreeRTOS project. It is deliberately short; the full starter kit adds traceability, test planning, CI, and release-evidence templates.
+Use this as a first-pass review for a small technical product. It is deliberately short; the full starter kit adds traceability, test planning, CI, and release-evidence templates. The included examples lean embedded, but the loop applies to any team that needs to show how a release was checked.
 
 ## Scope and ownership
 
-- [ ] The target MCU, board revision, toolchain, and RTOS version are recorded.
+- [ ] The product boundary, revision, toolchain, build system, and test environment are recorded.
 - [ ] The project states what is **not** covered by this checklist.
 - [ ] Every safety-, power-, communication-, and recovery-critical requirement has an owner.
 
@@ -17,7 +17,7 @@ Use this as a first-pass review for a small STM32/C/FreeRTOS project. It is deli
 ## Tests and failure handling
 
 - [ ] Host tests cover normal behavior and at least one failure path per critical module.
-- [ ] Watchdog, stack overflow, allocation failure, and reset behavior are deliberate.
+- [ ] Critical failure, recovery, and degraded-mode behavior are deliberate.
 - [ ] Hardware-dependent tests are labelled separately from host tests.
 - [ ] A failed test produces actionable evidence: log, input, expected result, and revision.
 
@@ -29,4 +29,4 @@ Use this as a first-pass review for a small STM32/C/FreeRTOS project. It is deli
 
 ## Boundary
 
-This sample is a process aid. It is **not certification, flight approval, or a substitute for a qualified engineering review**.
+This sample is a process aid. It is **not certification, regulated approval, or a substitute for a qualified engineering review**.

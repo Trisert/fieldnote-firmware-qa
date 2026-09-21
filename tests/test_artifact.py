@@ -8,7 +8,8 @@ ROOT = Path(__file__).parents[1]
 class ArtifactTests(unittest.TestCase):
     def test_landing_page_has_real_offer_and_compliance_copy(self):
         page = (ROOT / "site" / "index.html").read_text()
-        self.assertIn("STM32 Embedded Firmware QA Starter Kit", page)
+        self.assertIn("Fieldnote", page)
+        self.assertIn("technical teams", page)
         self.assertIn("certification claims", page.lower())
         self.assertIn("checkout-url", page)
         self.assertIn("free", page.lower())
@@ -36,12 +37,12 @@ class ArtifactTests(unittest.TestCase):
         self.assertNotIn("JOS", sample)
 
     def test_bundle_exists_and_contains_required_files(self):
-        bundle = ROOT / "dist" / "embedded-firmware-qa-starter-kit-v0.1.0.zip"
+        bundle = ROOT / "dist" / "fieldnote-release-qa-starter-kit-v0.1.0.zip"
         self.assertTrue(bundle.is_file())
         with zipfile.ZipFile(bundle) as archive:
             names = set(archive.namelist())
-        self.assertIn("embedded-firmware-qa-starter-kit/README.md", names)
-        self.assertIn("embedded-firmware-qa-starter-kit/templates/ci-stm32.yml", names)
+        self.assertIn("fieldnote-release-qa-starter-kit/README.md", names)
+        self.assertIn("fieldnote-release-qa-starter-kit/templates/ci-stm32.yml", names)
 
     def test_preview_pages_inline_styles_for_file_preview(self):
         for relative in ["site/index.html", "site/kit-preview.html"]:

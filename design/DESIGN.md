@@ -1,7 +1,7 @@
 ---
 version: alpha
-name: Fieldnote / firmware QA
-description: "A lit engineering-report identity for small embedded teams: evidence first, process second."
+name: Fieldnote / release QA
+description: "A lit engineering-report identity for small technical teams: evidence first, process second."
 colors:
   primary: "oklch(54% 0.19 258)"
   secondary: "oklch(32% 0.12 258)"
@@ -39,7 +39,7 @@ components:
 
 ## Overview
 
-Fieldnote treats firmware QA as a document trail: requirements, tests, CI, and artifacts should remain connected after the person who ran the test has left the room.
+Fieldnote treats release QA as a document trail: requirements, tests, CI, and artifacts should remain connected after the person who ran the test has left the room. The first adapter is embedded, but the identity is not tied to one toolchain.
 
 ## Colors
 

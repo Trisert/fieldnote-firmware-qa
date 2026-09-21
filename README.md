@@ -1,6 +1,6 @@
-# Embedded Firmware QA Starter Kit
+# Fieldnote Release QA Starter Kit
 
-A small, practical quality-assurance pack for STM32/C/FreeRTOS projects.
+A small, practical release-quality pack for technical teams shipping hardware, firmware, or software.
 
 ## What this repository contains
 
@@ -11,9 +11,9 @@ A small, practical quality-assurance pack for STM32/C/FreeRTOS projects.
 
 ## Product boundary
 
-This is a **starter kit**, not a safety certification, flight-readiness approval, or substitute for a qualified engineering review. Adapt every checklist to the target MCU, board, interface control documents, threat model, and applicable standards.
+This is a **starter kit**, not a certification, regulated sign-off, or substitute for a qualified engineering review. Adapt every checklist to the product, interfaces, threat model, requirements, and applicable standards.
 
-The first market hypothesis is broader than PocketQube: STM32, C, FreeRTOS, and small embedded teams. The spaceflight/PocketQube material is an optional extension, not the core audience.
+The first adapter uses embedded-project examples because they make the evidence problem concrete. The product hypothesis is broader: small technical teams that need a lightweight, traceable release process.
 
 ## Local verification
 
