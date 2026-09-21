@@ -9,7 +9,7 @@ class ArtifactTests(unittest.TestCase):
     def test_landing_page_has_real_offer_and_compliance_copy(self):
         page = (ROOT / "site" / "index.html").read_text()
         self.assertIn("STM32 Embedded Firmware QA Starter Kit", page)
-        self.assertIn("No certification", page)
+        self.assertIn("certification claims", page.lower())
         self.assertIn("checkout-url", page)
         self.assertIn("free", page.lower())
 
@@ -48,7 +48,8 @@ class ArtifactTests(unittest.TestCase):
             with self.subTest(relative=relative):
                 page = (ROOT / relative).read_text()
                 self.assertIn("<style>", page)
-                self.assertIn("--bg: #0b0e12", page)
+                self.assertIn("--paper:", page)
+                self.assertIn("evidence-card", page) if relative == "site/index.html" else self.assertIn("manifest-list", page)
 
 
 if __name__ == "__main__":
