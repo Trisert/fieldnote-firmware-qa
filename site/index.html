@@ -13,7 +13,7 @@
   --white: oklch(99% 0.004 220);
   --ink: oklch(24% 0.028 232);
   --muted: oklch(49% 0.035 232);
-  --quiet: oklch(64% 0.028 232);
+  --quiet: oklch(44% 0.028 232);
   --line: oklch(79% 0.025 220);
   --blue: oklch(54% 0.19 258);
   --blue-deep: oklch(32% 0.12 258);
@@ -80,7 +80,7 @@ h1 em { color: var(--blue); font-style: normal; }
 .sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .sheet-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
 .sheet-id { color: var(--quiet); font-size: 12px; }
-.pass-stamp { display: inline-grid; place-items: center; width: 76px; height: 76px; border: 2px solid var(--green); border-radius: 50%; color: var(--green); font-size: 13px; font-weight: 900; letter-spacing: .08em; transform: rotate(-8deg); }
+.pass-stamp { display: inline-grid; place-items: center; width: 76px; height: 76px; border: 2px solid var(--green); border-radius: 50%; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: .08em; text-align: center; transform: rotate(-8deg); }
 .sheet-title { margin: 34px 0 24px; font-family: var(--display); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 400; letter-spacing: -.05em; line-height: .95; }
 .evidence-rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 22px 0 30px; }
 .rail-step { position: relative; min-height: 74px; padding: 12px 9px; border-top: 5px solid var(--blue); background: var(--blue-pale); }
@@ -106,11 +106,12 @@ h1 em { color: var(--blue); font-style: normal; }
 .section-heading h2 { max-width: 720px; margin: 0; font-size: clamp(2.7rem, 6vw, 5.5rem); line-height: .92; }
 .section-heading p { max-width: 390px; margin: 0; color: var(--muted); }
 .trace-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(36px, 7vw, 100px); align-items: start; }
-.trace-table { border-top: 2px solid var(--ink); }
-.trace-row { display: grid; grid-template-columns: 1.2fr .8fr .9fr; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-.trace-row.header { color: var(--quiet); font-size: 11px; font-weight: 800; text-transform: uppercase; }
-.trace-row code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; }
-.trace-row span:last-child { color: var(--green); font-weight: 800; text-align: right; }
+.trace-table { width: 100%; border-top: 2px solid var(--ink); border-collapse: collapse; table-layout: fixed; }
+.trace-table th, .trace-table td { padding: 17px 10px 17px 0; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; vertical-align: top; }
+.trace-table th { color: var(--quiet); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.trace-table td:first-child { width: 43%; }
+.trace-table td code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; overflow-wrap: anywhere; }
+.trace-table td:last-child { color: var(--green); font-weight: 800; text-align: right; }
 .margin-note { position: relative; padding: 32px; border: 1px solid var(--line); background: var(--white); }
 .margin-note::before { content: ""; position: absolute; top: -12px; left: 28px; width: 72px; height: 24px; background: var(--blue-pale); transform: rotate(-3deg); }
 .margin-note h3 { margin-bottom: 18px; font-family: var(--display); font-size: 2.35rem; font-weight: 400; line-height: .98; letter-spacing: -.04em; }
@@ -195,9 +196,9 @@ h1 em { color: var(--blue); font-style: normal; }
   .rail-step::after { right: -11px; font-size: 13px; }
   .rail-step strong { font-size: 10px; }
   .rail-step span { font-size: 9px; }
-  .trace-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .trace-row span:last-child { text-align: left; }
-  .trace-row.header span:last-child { display: none; }
+  .trace-table th, .trace-table td { padding: 13px 5px 13px 0; font-size: 11px; }
+  .trace-table th { font-size: 9px; }
+  .trace-table td code { font-size: 10px; }
   .file-item { grid-template-columns: 45px 1fr; gap: 12px; }
   .file-purpose { grid-column: 2; }
   .fit-columns, .offer-list, .boundary { grid-template-columns: 1fr; }
@@ -231,22 +232,22 @@ h1 em { color: var(--blue); font-style: normal; }
       <div class="hero-copy">
         <p class="kicker">PRODUCT QA · RELEASE EVIDENCE · SMALL TEAMS</p>
         <h1>QA that leaves a <em>paper trail.</em></h1>
-        <p class="lede">A compact starter kit for teams shipping technical products that need to connect requirements, tests, CI results, and release evidence without importing a heavyweight process.</p>
+        <p class="lede">A compact release-QA starter kit for small technical teams. The current adapter is embedded-first; the traceability loop can be adapted to other stacks without importing a heavyweight process.</p>
         <div class="actions">
           <a class="button button-primary" href="sample-checklist.md">Read the free sample ↗</a>
           <a class="button button-secondary" href="kit-preview.html">Open the kit manifest</a>
         </div>
-        <p class="hero-caption">Plain Markdown, CSV, and YAML files. Inspect them before you decide.</p>
+        <p class="hero-caption">Current adapter: embedded-first. Plain Markdown, CSV, and YAML files. Inspect them before you decide.</p>
       </div>
 
       <div class="evidence-card" aria-label="Example release evidence sheet">
         <div class="evidence-sheet">
           <div class="sheet-top">
             <div>
-              <div class="sheet-label">Release evidence</div>
-              <div class="sheet-id">record R-014 / product release</div>
+              <div class="sheet-label">Illustrative release evidence · synthetic data</div>
+              <div class="sheet-id">sample record / product release</div>
             </div>
-            <span class="pass-stamp">PASS</span>
+            <span class="pass-stamp">SAMPLE</span>
           </div>
           <h2 class="sheet-title">The result is only useful when someone can follow it back.</h2>
           <div class="evidence-rail" aria-label="Evidence path">
@@ -259,8 +260,8 @@ h1 em { color: var(--blue); font-style: normal; }
             <tbody>
               <tr><th scope="row">target</th><td>technical product</td></tr>
               <tr><th scope="row">owner</th><td>engineering</td></tr>
-              <tr><th scope="row">tests</th><td class="ok">18 / 18 passed</td></tr>
-              <tr><th scope="row">static analysis</th><td class="ok">clean</td></tr>
+              <tr><th scope="row">tests</th><td class="ok">18 / 18 sample</td></tr>
+              <tr><th scope="row">static analysis</th><td class="ok">example clean</td></tr>
             </tbody>
           </table>
         </div>
@@ -280,13 +281,15 @@ h1 em { color: var(--blue); font-style: normal; }
         <p>The kit turns the unglamorous parts of product QA into files you can commit, review, adapt, and delete when they stop earning their keep.</p>
       </div>
       <div class="trace-layout">
-        <div class="trace-table" aria-label="Example requirements traceability table">
-          <div class="trace-row header"><span>requirement</span><span>verification</span><span>evidence</span></div>
-          <div class="trace-row"><code>REQ-014 / overcurrent</code><span>fault injection</span><span>linked</span></div>
-          <div class="trace-row"><code>REQ-021 / watchdog</code><span>hardware test</span><span>linked</span></div>
-          <div class="trace-row"><code>REQ-032 / boot path</code><span>host + target</span><span>linked</span></div>
-          <div class="trace-row"><code>REQ-041 / telemetry</code><span>integration</span><span>open</span></div>
-        </div>
+        <table class="trace-table" aria-label="Example requirements traceability table">
+          <thead><tr><th scope="col">requirement</th><th scope="col">verification</th><th scope="col">evidence</th></tr></thead>
+          <tbody>
+            <tr><td><code>REQ-014 / overcurrent</code></td><td>fault injection</td><td>linked</td></tr>
+            <tr><td><code>REQ-021 / watchdog</code></td><td>hardware test</td><td>linked</td></tr>
+            <tr><td><code>REQ-032 / boot path</code></td><td>host + target</td><td>linked</td></tr>
+            <tr><td><code>REQ-041 / telemetry</code></td><td>integration</td><td>open</td></tr>
+          </tbody>
+        </table>
         <aside class="margin-note">
           <h3>One open row is more honest than a green dashboard.</h3>
           <p>Start with the uncomfortable part: make the missing proof visible, assign it, and keep the decision in the project history.</p>
@@ -298,7 +301,7 @@ h1 em { color: var(--blue); font-style: normal; }
     <section class="section blue-field" aria-labelledby="contents-title">
       <div class="shell">
         <div class="section-heading">
-          <h2 id="contents-title">Seven files. One repeatable loop.</h2>
+          <h2 id="contents-title">Seven working files. One repeatable loop.</h2>
           <p>The bundle is not a course and it is not a certification package. It is a set of working surfaces for the next technical release. The current adapter uses embedded-project examples, but the evidence loop travels further.</p>
         </div>
         <div class="file-list">
@@ -306,8 +309,9 @@ h1 em { color: var(--blue); font-style: normal; }
           <div class="file-item"><span class="file-number">02</span><strong class="file-name">requirements-traceability.csv</strong><span class="file-purpose">A spreadsheet-friendly map of requirement, method, evidence, owner, and status.</span></div>
           <div class="file-item"><span class="file-number">03</span><strong class="file-name">test-plan.md</strong><span class="file-purpose">Host, hardware-in-loop, fault-injection, and release planning structure.</span></div>
           <div class="file-item"><span class="file-number">04</span><strong class="file-name">bug-report.yml</strong><span class="file-purpose">A GitHub Issue Form for failures someone else can reproduce.</span></div>
-          <div class="file-item"><span class="file-number">05</span><strong class="file-name">ci-stm32.yml</strong><span class="file-purpose">Build, test, analysis, and artifact gates for pull requests. Rename or adapt the commands for your stack.</span></div>
-          <div class="file-item"><span class="file-number">06</span><strong class="file-name">examples/README.md</strong><span class="file-purpose">Adapter notes for your build system, test runner, hardware boundary, or service.</span></div>
+          <div class="file-item"><span class="file-number">05</span><strong class="file-name">issue-template.md</strong><span class="file-purpose">A small requirement-linked issue shape for the work between tests.</span></div>
+          <div class="file-item"><span class="file-number">06</span><strong class="file-name">ci-stm32.yml</strong><span class="file-purpose">Build, test, analysis, and artifact gates for pull requests. Rename or adapt the commands for your stack.</span></div>
+          <div class="file-item"><span class="file-number">07</span><strong class="file-name">examples/README.md</strong><span class="file-purpose">Adapter notes for your build system, test runner, hardware boundary, or service.</span></div>
         </div>
       </div>
     </section>
@@ -352,8 +356,8 @@ h1 em { color: var(--blue); font-style: normal; }
       <aside class="price-sheet" id="checkout">
         <p class="price-label">Target price</p>
         <strong class="price">€9–19</strong>
-        <p class="price-note">Checkout stays off until a real provider and a real product URL are chosen.</p>
-        <a class="button button-disabled" data-checkout-url="" href="#checkout" aria-disabled="true">Checkout not configured</a>
+        <p class="price-note">Checkout stays off until a real provider and a real product URL are chosen. Start with the free sample while the offer is being validated.</p>
+        <span class="button button-disabled" data-checkout-url="" role="status">Checkout not configured</span>
         <a href="kit-preview.html">See the exact manifest →</a>
       </aside>
     </section>

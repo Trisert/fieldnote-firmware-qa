@@ -9,9 +9,13 @@ class ArtifactTests(unittest.TestCase):
     def test_landing_page_has_real_offer_and_compliance_copy(self):
         page = (ROOT / "site" / "index.html").read_text()
         self.assertIn("Fieldnote", page)
-        self.assertIn("technical teams", page)
+        self.assertIn("embedded-first", page)
+        self.assertIn("Illustrative release evidence", page)
         self.assertIn("certification claims", page.lower())
         self.assertIn("checkout-url", page)
+        self.assertNotIn('data-checkout-url="" href="#checkout"', page)
+        self.assertEqual(page.count('class="file-item"'), 7)
+        self.assertIn('<table class="trace-table"', page)
         self.assertIn("free", page.lower())
 
     def test_kit_has_the_core_deliverables(self):

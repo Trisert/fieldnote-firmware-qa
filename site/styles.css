@@ -4,7 +4,7 @@
   --white: oklch(99% 0.004 220);
   --ink: oklch(24% 0.028 232);
   --muted: oklch(49% 0.035 232);
-  --quiet: oklch(64% 0.028 232);
+  --quiet: oklch(44% 0.028 232);
   --line: oklch(79% 0.025 220);
   --blue: oklch(54% 0.19 258);
   --blue-deep: oklch(32% 0.12 258);
@@ -71,7 +71,7 @@ h1 em { color: var(--blue); font-style: normal; }
 .sheet-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .sheet-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
 .sheet-id { color: var(--quiet); font-size: 12px; }
-.pass-stamp { display: inline-grid; place-items: center; width: 76px; height: 76px; border: 2px solid var(--green); border-radius: 50%; color: var(--green); font-size: 13px; font-weight: 900; letter-spacing: .08em; transform: rotate(-8deg); }
+.pass-stamp { display: inline-grid; place-items: center; width: 76px; height: 76px; border: 2px solid var(--green); border-radius: 50%; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: .08em; text-align: center; transform: rotate(-8deg); }
 .sheet-title { margin: 34px 0 24px; font-family: var(--display); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 400; letter-spacing: -.05em; line-height: .95; }
 .evidence-rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 22px 0 30px; }
 .rail-step { position: relative; min-height: 74px; padding: 12px 9px; border-top: 5px solid var(--blue); background: var(--blue-pale); }
@@ -97,11 +97,12 @@ h1 em { color: var(--blue); font-style: normal; }
 .section-heading h2 { max-width: 720px; margin: 0; font-size: clamp(2.7rem, 6vw, 5.5rem); line-height: .92; }
 .section-heading p { max-width: 390px; margin: 0; color: var(--muted); }
 .trace-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(36px, 7vw, 100px); align-items: start; }
-.trace-table { border-top: 2px solid var(--ink); }
-.trace-row { display: grid; grid-template-columns: 1.2fr .8fr .9fr; gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-.trace-row.header { color: var(--quiet); font-size: 11px; font-weight: 800; text-transform: uppercase; }
-.trace-row code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; }
-.trace-row span:last-child { color: var(--green); font-weight: 800; text-align: right; }
+.trace-table { width: 100%; border-top: 2px solid var(--ink); border-collapse: collapse; table-layout: fixed; }
+.trace-table th, .trace-table td { padding: 17px 10px 17px 0; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; vertical-align: top; }
+.trace-table th { color: var(--quiet); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.trace-table td:first-child { width: 43%; }
+.trace-table td code { color: var(--blue-deep); font-family: var(--text); font-size: 13px; font-weight: 800; overflow-wrap: anywhere; }
+.trace-table td:last-child { color: var(--green); font-weight: 800; text-align: right; }
 .margin-note { position: relative; padding: 32px; border: 1px solid var(--line); background: var(--white); }
 .margin-note::before { content: ""; position: absolute; top: -12px; left: 28px; width: 72px; height: 24px; background: var(--blue-pale); transform: rotate(-3deg); }
 .margin-note h3 { margin-bottom: 18px; font-family: var(--display); font-size: 2.35rem; font-weight: 400; line-height: .98; letter-spacing: -.04em; }
@@ -186,9 +187,9 @@ h1 em { color: var(--blue); font-style: normal; }
   .rail-step::after { right: -11px; font-size: 13px; }
   .rail-step strong { font-size: 10px; }
   .rail-step span { font-size: 9px; }
-  .trace-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .trace-row span:last-child { text-align: left; }
-  .trace-row.header span:last-child { display: none; }
+  .trace-table th, .trace-table td { padding: 13px 5px 13px 0; font-size: 11px; }
+  .trace-table th { font-size: 9px; }
+  .trace-table td code { font-size: 10px; }
   .file-item { grid-template-columns: 45px 1fr; gap: 12px; }
   .file-purpose { grid-column: 2; }
   .fit-columns, .offer-list, .boundary { grid-template-columns: 1fr; }
